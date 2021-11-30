@@ -1,0 +1,397 @@
+\documentclass{iaesarticle}
+
+%%required package. add for your convenient, but do not remove the initial
+\setlength{\headsep}{0.15in}
+\usepackage{amsmath, amsfonts, amssymb, float, fancyhdr}
+\usepackage[figuresright]{rotating}
+\usepackage{authblk, graphicx, indentfirst, lastpage, lipsum}
+\usepackage{pifont}
+\renewcommand{\Authsep}{, }
+\renewcommand{\Authand}{, }
+\renewcommand{\Authands}{, }
+\setlength{\affilsep}{0cm}
+\renewcommand\Authfont{\normalsize}
+\renewcommand\Affilfont{\normalfont\small}
+\makeatletter
+\renewcommand{\@biblabel}[1]{[#1]\hfill}
+\makeatother
+\usepackage{subfig, caption, epstopdf}
+\usepackage[left=3cm, right=2.5cm, top=2.5cm, bottom=2.5cm, includehead, includefoot]{geometry}
+\usepackage[justification=centering]{caption}
+\captionsetup{labelsep=period}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\titleformat{\section}
+{\normalfont\normalsize\bfseries\uppercase}{\thesection}{1.7em}{}
+\titleformat{\subsection}
+{\normalfont\normalsize\bfseries}{\thesubsection}{.95em}{}
+\titleformat{\subsubsection}
+{\bfseries}{\thesubsubsection}{.2em}{}
+\titlespacing*{\section}{0cm}{0.7cm}{0cm}
+\usepackage{enumitem}
+\usepackage[numbers,compress]{natbib}
+
+\usepackage[backref]{hyperref}
+\usepackage{multirow}
+\usepackage{float}
+
+
+
+
+%%leave copyright info to the editor
+\CopyrightLine[]{}{\textit{This is an open access article under the \textcolor{blue}{\underline{CC BY-SA}} license.}
+\vspace{.5em}}
+
+%%author
+
+
+%%author's affiliation
+
+
+
+%%title and shortitle (for footer)
+\title{Triclustering method for finding biomarkers in human immunodeficiency virus-1 gene expression data}
+\shorttitle{Triclustering method for finding biomarkers in human immunodeficiency virus-1 gene expression data (Titin Siswantining)}
+
+%%starting
+\begin{document}
+\setcounter{page}{1}
+
+%%indentation. do not change
+\setlength{\parindent}{1.27cm}
+
+%%header and footer setting. do not change
+\pagestyle{fancy}
+\fancyhfoffset{0cm}
+
+%%journal info
+\journalname{}
+\journalshortname{}
+\journalhomepage{}
+\vol{}
+\no{}
+\months{}
+\years{}
+\issn{}
+\DOI{}
+\pagefirst{}
+\pagelast{}
+
+%%build title
+\maketitle
+
+%%border setting. do not change
+\hrule
+\vspace{.1em}
+\hrule
+\vspace{.5em}
+\noindent
+\parbox[t][][s]{0.275\textwidth}{%
+\textbf{Article Info}
+\vspace{.5em}
+\hrule
+\vspace{.5em}
+
+\vspace{.5em}
+
+%%article info. editor's privilege
+%%Received Jan 20, 2018
+
+%%Revised Nov 9, 2018
+
+%%Accepted Jun 10, 2018
+
+\vspace{.7em}
+
+\vspace{.5em}
+\hrule
+\vspace{.5em}
+
+\vspace{.5em}
+%%write keyword here. separate by \sep
+\vspace{.5em}
+
+\vspace{\fill}
+}
+\parbox{0.025\textwidth}{\hspace{0.5em}}
+\parbox[t][][s]{0.7\textwidth}{%
+\begin{abstract}
+\vspace{.3em}
+%% Text of abstract
+HIV-1 is a virus that destroys CD4 + cells in the body's immune system, causing a drastic decline in immune system performance. Analysis of HIV-1 gene expression data is urgently needed. Microarray technology is used to analyze gene expression data by measuring the expression of thousands of genes in various conditions. The gene expression series data, which are formed in three dimensions, are analyzed using triclustering. Triclustering is an analysis technique for 3D data that aims to group data simultaneously into rows and columns across different times/conditions. The result of this technique is called a tricluster. A tricluster is a subspace in the form of a subset of rows, columns, and time/conditions. In this study, we used the $\delta$-Trimax, THD Tricluster, and MOEA methods by applying different measures, namely, transposed virtual error, the New Residue Score, and the Multi Slope Measure. The gene expression data consisted of 22,283 probe gene IDs, 40 observations, and four conditions: normal, acute, chronic, and non-progressor. Tricluster evaluation was carried out based on intertemporal homogeneity. An analysis of the probe ID gene that affects AIDS was carried out through this triclustering process. Based on this analysis, a gene symbol associated with AIDS due to HIV-1, HLA-C, was found in every condition for normal, acute, chronic, and non-progressive HIV-1 patients.
+\end{abstract}
+}
+\parbox[l]{\textwidth}{%
+\rule{0.275\textwidth}{0.5pt} \hspace{0.5cm} \hrulefill
+\\
+\emph{\textbf{Corresponding Author:}}
+\vspace{.5em}\\
+%% correspondence info. separate by \\
+Titin Siswantining,\\
+Department of Mathematics,\\
+Universitas Indonesia,\\
+Depok,Jakarta, Indonesia \\
+Email: titin@sci.ui.ac.id
+}
+\vspace{.5em}
+\hrule
+\vspace{.1em}
+\hrule
+
+
+%% main text
+
+\section{Introduction}
+
+Currently, many studies are being conducted on gene expression. Several technologies can aid in the process of measuring gene expression. The most commonly used technology is microarray technology. Microarray technology is used to measure the expression of thousands of genes simultaneously, resulting in a very large data source called a gene expression matrix, which is formed in a structured manner. In recent years, microarray technology has been used to measure the expression values of thousands of genes under a wide variety of experimental conditions at different points in time. Such a dataset can be referred to as gene-sample-time (GST) expression data. In addition to the GST expression data, other types of three-dimensional (3D) data are used in the biomedical and social fields. These include individual-feature-time and node-node-time data, which is commonly referred to as attribute-data-context.
+
+One of the techniques often used for gene expression data analysis is clustering. The analyzed gene expression data are presented in the form of a matrix, with rows representing the probe gene ID and columns representing observations. Clustering is a grouping technique that works on two-dimensional (2D) data, which aims to group rows or columns in a matrix to obtain a sub-matrix from one of them. This technique was developed into biclustering, with the aim of grouping 2D data in the form of rows and columns in a matrix simultaneously to obtain a sub-matrix from both of them. As the data grew larger and more complex and in response to constraints on classifying gene expressions with a certain time/condition, this technique was further developed into triclustering. Triclustering aims to group 3D data in rows and columns across different times/conditions. The result of this technique is called a tricluster, which is a subspace in the form of a subset of rows, columns, and time/conditions.
+
+In 2018, Kakati researched triclustering using a method called THD-Tricluster. This method consists of two steps: generating biclusters and generating triclusters. This method analyzes 3D gene expression data and can identify various patterns, such as absolute shifting and scaling as well as shifting and scaling using the Shifting and Scaling Similarity (SSSim) measure. The SSSim measure has been used to overcome the limitations of several previous studies, which identified only one pattern and not shifting and scaling patterns. This research is new because it can mine data in various patterns, especially shifting and scaling. In addition, the algorithm was used by Kakati to build a tricluster using MATLAB software. Apart from the SSSim measure, there are also new residue scores and transposed virtual error, which is a measure that handles various patterns, especially shifting and scaling. This measure works by looking for correlations between rows and columns of a matrix, known as Pearson correlation. In this study, the researchers were inspired to implement the THD-Tricluster method using a new residue score on 3D gene expression data for Human Immunodeficiency Virus-1 (HIV-1). HIV-1 is a deadly disease that requires analysis to inhibit disease progression because late diagnosis leads to the death of many HIV-1 sufferers. In 2006, Sushmita Mitra and Haider Banka introduced the bicluster search phase using the multi-objective evolutionary algorithm (MOEA) with the mean square residue (MSR) measurement. They then built a tricluster using the Trigen algorithm.
+
+In this study, we use the THD tricluster method with a new residue score, Transposed Virtual Error, and we use MOEA for optimization in searching for biclusters as well as the Trigen algorithm with multi-slope measurement. Then, the results are compared with those using the $\delta$-Trimax method, which uses the mean square residual measure. The obtained triclusters are evaluated based on inter-temporal homogeneity, and the tricluster results are analyzed to find biomarkers against HIV-1. Open source R-based software is used to implement the program used to build a tricluster with a multi-objective approach to HIV-1 gene expression data.
+
+ 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Materials and Methods}
+\subsection{Data Sets}
+
+This research uses developmental data for HIV-1 referred to in and obtained from the National Center for Biotechnology Information (NCBI) website (address ID GSE6740). The NCBI site provides access to biomedical and genome information. The data consist of 22283 gene ID probes, 10 observations, and four conditions. These conditions include HIV acute sufferers, HIV chronic sufferers, HIV non-progressors, and uninfected individuals. The four data types have different gene expression values. Before using the triclustering method, the gene ID probe selection process was carried out, and 2557 gene ID probes were produced along with 10 observations for each condition.
+
+\subsection{THD-Tricluster}
+
+THD-Tricluster is a triclustering method capable of mining 3D data with absolute patterns, shifts, scaling, shifting, and scaling with high biological significance. The THD-Tricluster method consists of two stages: generating biclusters and generating triclusters. The THD-Tricluster workflow with three-time points can be seen in
+
+\subsubsection{Generate Biclusters with Modifed CC Algorithm}
+The CC algorithm is the first algorithm used to identify biclustering in gene expression data using the MSR as a measure. In this research, the CC algorithm is modified using the Transposed Virtual Error $VE^t$ measure, which can group data based on shifting patterns and scaling. The CC algorithm used consists of multiple node deletion, single node deletion, and single node addition phases.
+
+\paragraph{Multiple Node Deletion Phase}
+The input in the multiple node deletion phase is a matrix of gene expression data. In the CC algorithm, we need the alpha ($\gamma$) parameter, which represents the limits of the selected data. This phase involves deleting rows and columns simultaneously if they do not meet the chosen parameters.
+
+\paragraph{Single Node Deletion Phase}
+The input of this phase is the submatrix obtained from the multiple node deletion phase. The parameter used is the delta ($\delta$). If in the multiple node deletion stage rows and columns can be deleted simultaneously, then in this phase the columns and rows are only deleted one by one. The deletion of rows and columns occurs by comparing the transposed virtual error value with the delta ($\delta$). Selected rows and columns are deleted, which requires several steps, including calculating the average row value of the matrix element minus the virtual condition ($m_r$) and the average column value of the matrix element minus the virtual condition ($m_c$) and then finding the max value ($m_{r_i} ,m_{c_j }$). Columns or rows that have a greater value are deleted. This process takes place until it the selected delta parameter values are met.
+
+\paragraph{Single Node Addition Phase}  
+In this phase, the parameter used is the delta ($\delta$), and the input is a matrix obtained from the single node addition phase. The matrix is added again with rows or columns that have been deleted in the multiple node deletion phase. This is done to produce a more optimal bicluster by adding a column or row so that the transposed virtual error value obtained is close to the limit of the selected parameter value.
+
+\paragraph{Lift Algorithm}
+The lift algorithm consists of two phases: single node deletion and single node addition. The single node deletion algorithm aims to remove nodes in the form of rows or columns on the matrix that have values exceeding the threshold. In this study, the value in question is the result of the calculation of the new residue score ($S$). Iterations of this step continue until $S \leq \delta$. The submatrix obtained by single node deletion may not be maximal, so we check on the deleted nodes again in the single node deletion step using the single node addition step. The checking is done by recalculating the value of $S$ in rows or columns that have been deleted on the condition that it can maintain an $S$ value that is less than node so that nodes that produce a small $S$ value will be added. This iteration will end when no more nodes can be added.
+\subsubsection{Generate Tricluster}
+The generate triclusters stage aims to produce a set of triclusters. Triclusters are found by finding the slices of all bicluster combinations for each condition.
+
+\paragraph{New Residue Score}
+The purpose of the new residue score is to find the correlation between rows and columns of a matrix, known as the Pearson correlation. This correlation indicates the degree of the linear relation between two vectors and will produce a perfect bicluster correlation.
+
+The result of this correlation is a number between 1 and -1, which means that there is a perfect positive (or negative) linear relationship between the indexed submatrices. The correlation value in the indexed submatrix column ($I$, $J$) is defined as:
+
+The values of $S_{col}$ and $S_{row}$ indicate the degree of correlation of the respective columns and rows of a submatrix. The correlation values of the indexed submatrix ($I, J$) are defined as follows:
+
+
+Given a submatrix indexed ($I,J$), the correlation value (residue) of the submatrix is:
+
+The lower the correlation value, the better the column and row correlation will be. According to, the determination of the bicluster residual value is based on the minimum value of row and column correlation.
+
+\paragraph{Transpose Virtual Error}
+The purpose behind $VE$ is to measure the genes that have a general tendency to bicluster. To determine the general trend of this gene across the conditions contained in the bicluster, new virtual lines are counted from the bicluster gene, which is called a virtual pattern or virtual $\rho$ gene. Each element $\rho_j$ of $\rho$ is calculated as the average of the $jth$ column or experimental conditions, as in the following equation:
+
+In the $VE^t$ calculation, a standardization process is carried out on each data element and the virtual conditions. The process of standardizing the elements of each submatrix involves calculating the average value for each row and calculating the standard deviation value for each row, which can be expressed as follows:
+
+Meanwhile, the virtual standardization process can be calculated by calculating the average of each column and the standard:
+
+The $VE^t$ value for the submatrix $\mathfrak{B}$ is obtained using the standardization of the virtual condition value $\hat{\rho}$ together with the standardized submatrix elements $\hat{b}_{ij}$. The formula for calculating the $VE^t$ value is as follows:
+
+$VE^t$ has been shown to be zero for biclusters with perfect shifting, scaling, or compound patterns. Therefore, it is efficient to recognize shifting and scaling patterns in biclusters either simultaneously or independently.
+
+\paragraph{Multi Slope Measure (MSL)}
+Understanding MSL requires a graphic representation of tricluster $TRI_{xop}$, where $x$, $o$, and $p$ are one of gene $G$, condition $C$, and time or depth $T$ so that element $x$ on $TRI_{xop}$ will be on the $X$-axis, and element $o$ on $TRI_{xop}$ will outline the panels that are elements $p$ on $TRI_{xop}$, as shown in . MSL calculates the difference among the angles formed by every series traced on each of three graphic representations, taking into account $TRI_{gct}$, $TRI_{gtc}$, and $TRI_{tgc}$. MSL accounts for the effect of adjacent points in time. This can be observed in the examples $TRI_{gtc}$ from $TRI$ = $G{g_1, g_4, g_7, g_10}, C{c_2, c_5, c_8}, T{t_0, t_2, t_{11}}$ on . Further, it can be seen how each outline or gene forms a set of angles (two in this case) determined by each point in time on the X-axis for each panel or experimental condition.
+
+MSL measures the average difference between the angles formed by the probe ID gene in all rows and columns for each individual or candidate tricluster. To calculate the MSL measure of a tricluster, a multiangular ratio calculation is first performed. Define the $AC_{multi}$ tricluster $TRI_{tgc}$ as the average difference $\Delta$ from an angle vector $av_{op} \in ang set$ from all of the outlines $o$, for each panel $p$ $(V_{mc})$, and the same for the rest of panels $(H_{mc})$, where $N_{mc}$ is the number of differences that are formed. All the angular vectors of an outline $o$ on panel $p$ are defined as a set of angles formed by outline $o$, taking into account each data point on the $X$-axis. Each outline will have many (axis mark $X$–$1$) angles, as can be seen in . The difference $\Delta$ between two vector angles $av_A$ and $av_B$ is defined as the average of $MAX - MIN$ ($MAX$ is the maximum, and $MIN$ is the minimum of the two angles $av_{A}(i)$ and $av_{B}(i)$) of any component or angle $i$ from $av_A$ and $av_B$.
+
+$AC_{multi}$ is based on multiple operations with the $av_{op}$ angle vector. These elements are obtained based on the concept of a series, so the series $S_{op}$ from the ouline $o$ for each panel $p$ is the set of value pairs from the $X$-axis ($x_i$) and expression level ($el_j$), which forms the outline. For each set $S_{op}$, the angle of alpha $a_{x_i}$ is the spin arctangent of the slope of the line formed by the points ($x_i,el_i$) and ($x_{next(i)},el_{next(i)}$). The spin operation from an angle is the positive equivalent of the angle if it is negative.
+
+
+To conclude, the MSL measure of a TRI tricluster as shown in equation 23 is the mean of the angular comparisons of three graphical representations of a tricluster.
+
+\subsection{Multi-Objective Optimization}
+Multi-objective optimization is a development of a genetic algorithm. The genetic algorithm is used to solve problems in the search for optimization values. Multi-objective evolution is based on genetic processes in living things, including the process of developing generations in a population, which is gradually based on natural selection. This algorithm is used to search for optimal biclusters and triclusters.
+
+\subsubsection{Initial Population}
+Initialization of the population is the first step in multi-objective optimization. Population is the number of individuals who represent the desired solution. In this study, individuals are the number of submatrices in the first method (MOEA and THD tricluster) and subspaces in the second method (Triclustering Genetic Based) obtained from the gene expression matrix. The initial population is generated randomly so that an initial solution is obtained. Initialization is done by coding. Coding is an important aspect of multi-objective optimization. Encoding is a technique for expressing the initial population as a potential solution to a problem onto an individual chromosome. In this study, the researchers used binary coding, which is used to encode (encode) all chromosomes. Each possible bicluster or tricluster is represented by the total bits of the binary string $|G|+|S|+|T|$ used. Bits from binary string $|G|$ are used to encode genes, bits of the binary string $|S|$ are used to encode observations, and bits of the binary string $|T|$ are used to encode conditions. When coding, $1$ in the binary string means that the gene, observation, or condition is grouped into a bicluster/tricluster, while $0$ means that the gene, observation, or condition is not grouped in a bicluster/tricluster.
+
+\subsubsection{Local Search}
+The local search consists of multiple node deletion, single node deletion, and single node addition. Local search is used in the MOEA process. The steps of the multiple node deletion algorithm on the matrix $M(I,J)$ are as follows:
+
+\begin{enumerate}
+	\item When $VE^t \geq \delta$, go to step $2$; otherwise the process is discontinued, and $M(I,J)$ is given as the final result of this algorithm.
+	\item Delete all the probe ID genes $i\in I$ if they satisfy: $\frac{1}{|J|}\sum_{i\in I}|\hat{b_{ij}}-\hat{\rho_i}| > \alpha \times VE^t $
+	\item Recalculate the value of $VE^t$ after deletion.
+	\item Delete all of the observations $j \in J$ if they satisfy: $\frac{1}{|I|}\sum_{j\in J}|\hat{b_{ij}}-\hat{\rho_i}| > \alpha \times VE^t$
+	\item Recalculate the value of $VE^t$ after deletion.
+	\item These results then serve as input to the single node deletion algorithm.
+\end{enumerate}
+
+The steps of the single node deletion algorithm are as follows:
+\begin{enumerate}
+	\item Detect the probe ID gene and observation that has the highest $VE^t$ score in the following ways:
+	\item Row score for ID gene to-$i$, $\forall i \in I$, $\mu_{i}=\frac{1}{|J|}\sum_{i \in I}|\hat{b_{ij}}-\hat{\rho_i}|$
+	\item Column score for observation to-$j$, $\forall j \in J$,
+$\mu_{j}=\frac{1}{|I|}\sum_{j \in J}|\hat{b_{ij}}-\hat{\rho_i}|$
+	\item Delete the probe ID gene or observation with the highest score.
+	\item Recalculate the value of $VE^t$.
+	\item Repeat steps $a$ to $c$. If the value of $VE^t \leq \delta $, then stop the iteration
+\end{enumerate}.
+
+The final result from the node addition algorithm is data subspace $M(I',J')$, where $I' \subseteq I$ and $J'\subseteq J$. Subspace data produced from this algorithm are in the form of a bicluster with $VE^t\leq\delta$ of the maximum size.
+
+\subsubsection{Fitness Function}
+In each generation, the chromosomes will go through an evaluation process using a measuring instrument called fitness. The fitness value of a chromosome describes the quality of the chromosomes in the population. This process will evaluate each population by calculating the fitness value of each chromosome and evaluating it until the stop criteria are met. Some of the criteria for stopping that are often used include stopping at a certain generation, stopping after several successive generations when the highest fitness value has not changed, and stopping in $n$ generations if a higher fitness value is not achieved.
+
+In this study, for the first method, namely, the search for biclusters with MOEA, the researcher wanted the size of the bicluster to meet the large homogeneity criteria and the error value of the minimum bicluster results. Based on the two criteria above, a formula is created for the value of the fitness functions $f_1$ and $f_2$
+
+where $|I|$ is the number of probe ID genes, $|J|$ is the number of observations in the submatrix or bicluster, and $|G|$ and $|S|$ are the number of probe ID genes and the number of observations in the preliminary data, respectively. $VE^t$ is the Transpose Virtual Error of the bicluster, while $\delta$ is a given error tolerance limit.
+
+For the Trigen algorithm, MSL results are added to the genetic algorithm fitness function $FF(TRI)$ along with the individul size and overlap control. MSL is combined with six other factors as a weighted average. The first three factors $1-\frac{|TRI_G|}{|D_G|}$, $1-\frac{|TRI_C|}{|D_C|}$, and $1-\frac{|TRI_T|}{|D_T|}$ measure the number of genes, conditions, and time of $TRI(TRI_{G,C,T})$ compared to the size of the dataset $(|D_{G,C,T}|)$. Because MSL minimizes the fitness function, therefore on these three factors are made 1- each proportion to produce a TRI with a larger size when the parameter $w_g$, $w_c$ or $w_t$ is increased. The next three factors $\frac{R_{G}(TRI,SOL)}{|TRI_G|\times|SOL_L|}$,$\frac{R_{C}(TRI,SOL)}{|TRI_C|\times|SOL_L|}$, and $\frac{R_{T}(TRI,SOL)}{|TRI_T|\times|SOL_L|}$ measure the number of genes, conditions, and time or depth elements $TRI$ in the set of solutions that have been found previously $SOL (|TRI_{G,C,T}|\times|SOL|)$ to produce $TRI$ with a small overlap as the $wo_g$, $wo_c$, or $wo_t$ value increases.
+Finally, the main function $\frac{MSL(TRI)}{2\pi}$ measures the $MSL(TRI)$ proportional value close to its maximum value of $2\pi$ to produce $TRI$ with a small MSL value when the $w_f$ value is increased. The default configuration value of $w_f$, $w_g$, $w_c$, $w_t$, $wo_g$, $w_oc$, and $wo_t$ divided by $w_f$ is $0,8$, and it is divided by $2$ between $w_g, w_c, w_t, wo_g, wo_c$, and $wo_t$.
+
+
+\subsubsection{Non Dominant}
+An individual can be said to dominate other individuals if it meets the following:
+\begin{enumerate}
+	\item Individual $A$ is no worse off than individual $B$ on all objectives ($A \geq B$).
+	\item Individual A has at least one better objective than individual $B$.
+\end{enumerate}
+Based on these rules, each individual is compared with other individuals in a population. The optimization problem in this case is to find the minimum value of two objective functions so that the domination condition is that an individual is not worse than another individual and has at least one objective whose value is greater than that of the other individuals. This individual can be at the first front. Then, the next front is filled in based on individuals who were dominated in the previous front.
+
+\subsubsection{Crowding Distance}
+The crowding distance is calculated for each individual to measure how close the individual is to its neighbor. The average crowding distance will result in better diversity in the population. The parents are selected from the population using a binary selection tournament based on the crowding distance. Individuals are selected in this rank if they are lower than others or if the crowding distance is greater than others. The population that produces the offspring of the crossover and mutation operators is selected, which will be discussed in detail in the next section. Populations with current populations and current descendants are sorted again based on non-dominated sorting, and only the best $N$ individuals are selected, where $N$ is the population size.
+
+Crowding distance gives the highest value for the solution limit and the average distance of two solutions, that is, the solution to $(i+1)$ and the solution to $(i-1)$ and $i$ for each purpose. The crowding distance calculation step for the $i-th$ solution is as follows:
+
+\subsubsection{Crowding Selection Operator}
+There are several methods for selecting individuals that are often used, including roulette wheel selection, rank selection, and crowded tournament selection. In this study, the crowded tournament selection was utilized. The crowded tournament selection operator is defined as follows: Solution $i$ wins the tournament with another solution that is solution $j$ if one of the following is fulfilled:
+\begin{enumerate}
+	\item Solution $i$ has a better ranking, $r_i < r_j$
+	\item if both solutions are on the same front, namely, $r_i = r_j$, then the crowding distance of the $i$ solution is greater than the crowding distance of the $j$ solution ($CD_i > CD_j$).
+\end{enumerate}
+
+\subsubsection{Genetic Operator}
+The genetic operators including selection, crossover, and mutase are described below:
+\begin{enumerate}[label=\alph*)]
+	\item Selection: Three groups of individuals are randomly selected in order from lowest to highest according to the fitness function, and then a random selection of the three groups is made. The cell parameter shows how many of these individuals will pass to the next generation.
+	\item Crossover: To complete the next generation, a new individual is created with the following operators: two individuals (parent, $A$ and $B$) are combined to create two new individuals (offspring, child1 and child2). Parents are randomly selected. The $n$-bit inputs in each individual are combined by a random cross point in the gene $TRI_G$, condition $TRI_C$, and time $TRI_T$ and are then swapped to produce two new offspring.
+\end{enumerate}
+		$mr(t)$ is the row average condition of each tricluster, $mmr$ is the row average of all conditions from each tricluster, and $|T'|$ is the number of conditions or the depth of the tricluster.
+
+Correlation is the relationship between two vectors. A widely used correlation measure is Pearson's correlation. Pearson's correlation formula is based on vector mr(t) and mmr. An individual can mutate according to the possibility of mutation. The mutation probability is verified for each individual. First, it is necessary to generate a random number from 0-1 equal to the total number of genes, i.e., the individual multiplied by the number of $n$-bits, and if the random number generated is less than the specified probability of mutation, then a mutation will be carried out in the gene. If the value generated is more than the mutation probability, the mutation process is carried out in the gene. This action is to change the value of the gene if 0 becomes 1 and if the initial value 1 is mutated to 0.
+
+
+\subsubsection{Multi-Objective Evolutionary Algorithm (MOEA)}
+The main steps in the MOEA algorithm are as follows:
+\begin{enumerate}
+	\item Generate a random size population matrix $P$.
+	\item Delete or add rows or columns using local search.
+	\item Calculate the fitness function.
+	\item Rank the population using dominant criteria.
+	\item Calculate the crowding distance value.
+	\item Show the selection results using the crowding tournament selection.
+	\item Perform crossover and mutase to produce offspring populations.
+	\item Combine the parent and offspring populations.
+\end{enumerate}
+
+\subsection{Intertemporal Homogeneity}
+Intertemporal homogeneity measures gene homogeneity in various fields of gene observation. For triclusters, intertemporal homogeneity is calculated as follows:
+
+Pearson’s correlation has a value of $ -1 \leq corr(mr(t),mmr) \leq 1$. A correlation of $+1$ means that both are positively linear, while a correlation of $-1$ means that both are negatively linear. Perfect correlation is a correlation that has a value of $0$.
+
+\subsection{$\delta$-Trimax}
+The $\delta$-Trimax method is a development of the CC algorithm. This method was developed by Anirban Bhar, who generated triclusters in the form of sub-spaces from 3D data. This method aims to find triclusters that have a small mean square residual from $\delta$, where the delta is the threshold determined by the researcher.
+
+Suppose 3D data $Z(A,B,C)$, $M\subseteq Z$, so that $M(I,J,K)$ is a subspace with $I\subseteq A$,$J\subseteq B$ and $K\subseteq C$. The mean square residual(MSR) can be obtained using equation \ref{eq:17}
+
+
+The $\delta$-Trimax method consists of several algorithms, including single node deletion, multiple node deletion, node addition, and masking. In the single node deletion and multiple node deletion stages, the nodes will be deleted until the MSR is smaller than the specified delta. After deletion is done, node addition continues to maximize the obtained tricluster volume while still maintaining a small MSR of the delta. Then, masking is done to find other triclusters. The flowchart Trimax delta algorithm can be seen in  .
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Experimental Results}
+\subsection{THD-Tricluster Implementation}
+\subsubsection{THD-Tricluster with New Rresidue Score}
+In the generate biclusters stage, a bicluster search is carried out for the new residue score using a lift algorithm that has two stages, namely, single-node deletion and single-node addition, by setting a threshold value of $\delta = 0.08$. Biclusters are obtained in different amounts from each condition. The normal condition results in three biclusters, the acute condition results in 100 biclusters, the chronic condition results in 100 biclusters, and the non-progressor condition results in 13 biclusters. In the generate triclusters stage, the tricluster search is carried out in stages, which include looking for the probe ID slices and observations of the bicluster. In the tricluster search process, based on the results of the bicluster with a new residue score, the minimum probe ID $min_p=5$ is determined, and the minimum observation $min_o=2$ for the tricluster is obtained. This determination results in 32 triclusters. The results of all triclusters after validation through the GPL96 platform downloaded on NCBI showed that three genes were known to be associated with HIV-1: JUN, ELF-1, and HLA-C.
+
+\subsubsection{THD-Tricluster Transpose Virtual Error}
+Biclustering with a modified CC algorithm using transposed virtual error size and parameter $\delta = 0.4$ and $\lambda = 2.5$ results in less than 50 biclusters. Biclustering results in 38 biclusters in normal conditions, 31 in acute conditions, 49 in chronic conditions, and 37 in non-progressor conditions. The bicluster results of this bicluster are then sliced under each condition. In the tricluster search process, based on the biclustering results with transposed virtual error, the minimum probe ID $min_p=15$ is determined along with the minimum observation $min_o=3$ for the tricluster. From this determination, four triclusters are obtained.
+
+The use of transposed virtual errors in the THD triclustering method successfully solves the triclustering problem in 3D gene expression data by producing four triclusters at a depth of four (normal, acute, chronic, and non-progressor conditions), with an inter-temporal value of 0.9 for each tricluster. This algorithm requires several parameters to work: alpha and delta symbolized by $\alpha$ and $\delta$ in the biclustering process and the minimum parameters of observation and minimum probe gene symbolized by $m_o$ and $m_p$ in the triclustering process. The parameters selected in this study use the same value for each condition. The parameters $\alpha = 2.5$ and $\delta = 0.4$ are selected for the biclustering search, and the minimum probability of the selected gene is 15 with a minimum of four observations in the triclustering search process. From the whole research process, four tricluster are generated at a depth of four (normal, acute, chronic, and non-progressor conditions).
+
+\subsubsection{THD-Tricluster Transpose Virtual Error and MOEA}
+The MOEA method has a stage like NSGA II (Non-dominated Sorting Genetic Algorithm II), but an evaluation step is added, including node deletion and node addition. Here, the researcher used the transpose virtual error ($VE^t$). The initial stage in MOEA is population initialization, followed by evaluation using $VE^t$ for the node deletion and node addition stages, ranking execution using non-dominated sort, and selection operation using crowding distance and crowding tournament selection. This is followed by operator genetics, such as crossover and mutation, and then recombination between parents and offspring (children) and re-ranking using crowding distance and crowding tournament selection. The final step is to change the parents with the best solution of recombinants. The MOEA is used to search for biclusters to obtain the best bicluster.
+
+In this study, the number of individuals used per iteration was 100, the number of multi-objective functions was two, and the threshold ($\delta$) selection was based on the preliminary data transpose virtual error ($VE^t$) value. The researcher used 10 generations with a crossover probability of 0.8 and a mutation probability of 0.1. Two trials were conducted to select the best bicluster for the threshold of 0.5. The results of the MOEA cluster are shown.
+
+is an example of a bicluster gene expression graph for non-progressor conditions. It can be seen that the slopes of the lines between probe ID genes are almost the same, so it can be concluded that the shift and scaling patterns of the graph are fulfilled by transpose virtual error detection.
+
+From the bicluster results, each condition was examined for a slice between the biclusters to obtain a tricluster with a depth of two. The results of triclusters with a depth of two from trials one and two are shown .
+
+The three-state tricluster is the result of a two-state tricluster slice. In this study, the first step was extracting a tricluster with a depth of two, which was extracted based on the results of the tricluster uninfected with acute, uninfected with chronic, and acute with chronic. The two-depth tricluster was obtained by slicing the probe ID gene and the samples in the two-depth tricluster. The results of the three-depth tricluster are shown in.
+
+Experiment 1 resulted in a tricluster with three conditions, namely, uninfected, acute, and chronic conditions, with 325 probe ID genes in observations one and two. Meanwhile, in experiment 2, the tricluster obtained in the uninfected, acute, and chronic conditions had 326 probe ID genes in conditions two, three, and four. In experiment 2 with a depth of three, a slice between acute, chronic, and non-progressor was obtained, but only one observation. In this study, there was no tricluster with a depth of four.
+
+Intertemporal homogeneity was used to measure the tricluster results. This involved an evaluation of each tricluster. Based on the intertemporal homogeneity, the tricluster results for the two-condition tricluster and the three-condition tricluster were very good because the correlation values for all triclusers were close to one. The following shows the results of the tricluster correlation for experiments 1 and experiment 2.
+
+Based on experiments 1 and 2 above, it was found that triclusters were only obtained at depths two and three, while none were found at depth four. Experiment 1 showed that there was no relationship between non-progressors and the other three conditions (i.e., uninfected, acute, and chronic conditions) from the probe ID genes selected through the relative deviation and absolute deviation probe ID genes. Meanwhile, for the tricluster with a depth of three, the probe ID gene 208812\_x\_at contained HLA-C and probe ID gene 209602\_s\_at contained GATA-3. According to Kakati, et al., HLA-C and GATA-3 are genes related to HIV-1. In the second experiment, the tricluster with a depth of three obtained the same results, that is, the probe ID gene 208812\_x\_at contained HLA-C, while another probe ID gene, 201465\_s\_at, contained a gene with the name JUN. In the THD-tricluster paper, JUN showed a relation with HIV-1.
+
+Thus, in this study, the probe ID gene with ID 208812\_x\_at was obtained with the gene name HLA-C, the probe ID gene 209602\_s\_at with the gene name GATA-3, and the probe ID gene 201465\_s\_at with the name JUN. All three of these probe ID genes are associated with HIV-1. In addition to the analysis of gene ID probes, the researchers collected gene ID probe data from the NCBI website \url{ https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GPL96}.
+
+\subsection{TRIGEN}
+For the Trigen algorithm with a multi-slope measure size, the 10 tricluster results obtained are of the size shown.
+First, it could be seen that the resulting tricluster had the maximum weight. Moreover, the number of probe ID genes, which exceeded 50\% of the total probe ID genes in the initial dataset, was 2577. Second, it could also be seen that the tricluster solutions did not have a large overlap. Only one or two samples in this study had the same observations, and there were also tricluster results that did not have the same observation coordinates. This indicated that the overlap parameters worked properly. The following is a graphical example of the representation of the results of tricluster 1 in . It can be seen that the variations in the probe ID gene expressions of the two samples or observations have almost the same shape for each condition. This showed that the results of the grouping had the same pattern in all conditions.
+
+Hence, based on the aim of the Trigen algorithm, which maximizes the fitness function in which the Trigen fitness algorithm function in this study has been added, the multi-slope measure measure worked well for grouping data that have the same pattern. From the analysis of the 10 tricluster results obtained, six genes related to HIV were obtained based on the gene bank: HLA-C, JUN, CCR5, ELF1, CX3CR1, and GATA-3.
+
+
+\subsection{$\delta$-Trimax}
+A tricluster search of HIV data with $\delta$-Trimax was carried out. By using $\delta =0.0046$ and $\lambda =1.25$, we get 202 triclusters. Next, the tricluster with the smallest TQI is selected. From this tricluster, genes related to HIV-1 were obtained, namely AGFG1, EGR1, and HLA-C.
+
+A comparison of the results of each method can be seen in the table
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusions}
+
+Based on the THD-Tricluster method, the tricluster results obtained by using a new residue score resulted in 32 triclusters with genes associated with HIV, including ELF-1, HLA-C, and JUN. The tricluster results obtained using the transposed virtual error size included triclusters with two genes associated with HIV: ELF-1 and HLA-C. When using $\delta$-trimax, 202 triclusters were obtained with three genes associated with HIV: AGFG1, EGR1, and HLA-C.
+
+The bicluster results were used to generate triclusters. Tricluster results were obtained for depth two and depth three. The tricluster results regarding HIV-1 gene expression data showed genes associated with HIV-1, namely, HLA-C, GATA-3, and JUN. Based on the simulation results of the Trigen algorithm program with multi-slope measure evaluation, the target of 10 triclusters containing HIV-1 biomarkers (HLA-C, JUN, CCR5, ELF1, CX3CR1, and GATA-3) was successfully achieved in all conditions (i.e., uninfected, acute, chronic, and non-progressors). Therefore, based on the five methods utilized in this study, an HIV biomarker was obtained: HLA-C.
+
+\section*{Acknowledgement}
+\label{}
+NKB-035/UN2.F3/HKP.05.00/2021 is the number of the research grant provided by FMIPA Universitas Indonesia.
+
+%% The Appendices part is started with the command \appendix;
+%% appendix sections are then done as normal sections
+%% \appendix
+
+%% \section{}
+%% \label{}
+
+%% References
+%%
+%% Following citation commands can be used in the body text:
+%% Usage of \cite is as follows:
+%%   \cite{key}         ==>>  [#]
+%%   \cite[chap. 2]{key} ==>> [#, chap. 2]
+%%
+
+%% References with BibTeX database:
+
+
+%% Authors are advised to use a BibTeX database file for their reference list.
+%% The provided style IEEEtran.bst formats references is generally used.
+
+%% For references without a BibTeX database:
+
+
+
+
+\end{document}
+
+%%
+%% End of file `iaesarticle.tex'. 
